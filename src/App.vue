@@ -46,10 +46,10 @@ export default {
     return {
       overview: "",
       catalogue: "",
-      ingredient: "",
+      ingredient: "", //成分
       img: "",
-      feature: "",
-      adapt_symptom: "",
+      feature: "", //特性
+      adapt_symptom: "", //适用症状
     };
   },
   async created() {
@@ -57,7 +57,6 @@ export default {
       const res = await axios.get(baseURL);
       this.overview = res.data;
       this.catalogue = this.overview.catalogue;
-      console.log(this.catalogue);
       this.ingredient = this.overview.data[0].ingredient;
       this.feature = this.overview.data[1].feature;
       this.adapt_symptom = this.overview.data[2].adapt_symptom;
