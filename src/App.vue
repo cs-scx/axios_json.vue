@@ -1,35 +1,57 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <h1>{{ overview.name }}</h1>
+    <img width="300px" src id="img0" />
     <hr />
-    <b>简介：</b>
+    <h3>
+      <span class="badge badge-secondary badg">简介：</span>
+      <span class="after">
+        <hr />
+      </span>
+    </h3>
     <div class="text">
-      <p>{{ overview.description }}</p>
+      <p>{{overview.description}}</p>
     </div>
     <table class="table table-hover">
       <tbody>
         <tr>
           <td v-for="(item, index) in catalogue" :key="index">
-            <a href="">{{ item }}</a>
+            <a href>{{ item }}</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <h2>成分</h2>
-    <hr />
+    <h3>
+      <span class="badge badge-secondary badg">成分：</span>
+      <span class="after">
+        <hr />
+      </span>
+    </h3>
     <div class="text">
       <p>{{ ingredient }}</p>
     </div>
-    <p>化学式结构：</p>
-    <img
-      src="https://bkimg.cdn.bcebos.com/pic/14ce36d3d539b600c2785b5deb50352ac75cb7a2?x-bce-process=image/resize,m_lfit,w_220,h_220,limit_1"
-      alt=""
-    />
-    <h2>性状</h2>
-    <hr />
-    <div class="text">{{ feature }}</div>
-    <h2>适应症</h2>
-    <hr />
+    <h3>
+      <span class="badge badge-secondary badg">化学结构式：</span>
+      <span class="after">
+        <hr />
+      </span>
+    </h3>
+    <img width="300px" src alt id="img1" />
+    <h3>
+      <span class="badge badge-secondary badg">性状：</span>
+      <span class="after">
+        <hr />
+      </span>
+    </h3>
+    <div class="text">
+      <p>{{ feature }}</p>
+    </div>
+    <h3>
+      <span class="badge badge-secondary badg">适应症：</span>
+      <span class="after">
+        <hr />
+      </span>
+    </h3>
     <div class="text">
       <p>{{ adapt_symptom }}</p>
     </div>
@@ -38,7 +60,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3000/content";
+const baseURL = "http://localhost:3000/content"; //json resource
 
 export default {
   name: "App",
@@ -47,7 +69,7 @@ export default {
       overview: "",
       catalogue: "",
       ingredient: "", //成分
-      img: "",
+      imgs: [],
       feature: "", //特性
       adapt_symptom: "", //适用症状
     };
@@ -58,8 +80,11 @@ export default {
       this.overview = res.data;
       this.catalogue = this.overview.catalogue;
       this.ingredient = this.overview.data[0].ingredient;
+      this.imgs = this.overview.data;
       this.feature = this.overview.data[1].feature;
       this.adapt_symptom = this.overview.data[2].adapt_symptom;
+      document.getElementById("img0").src = this.overview.img;
+      document.getElementById("img1").src = this.imgs[0].imgUrl;
     } catch (e) {
       console.log(e);
     }
@@ -71,12 +96,40 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
 .text {
-  background-color: rgb(238, 238, 238);
-  padding: 10px 20px;
+  background-color: rgba(62, 85, 134, 0.2);
+  margin-left: 1.5em;
+  border-radius: 54px;
+  box-shadow: 3px 2px 5px #ccd0d3;
+}
+.text p {
+  padding: 15px 20px;
+  letter-spacing: 3px;
+  text-indent: 40px;
+}
+.after > hr {
+  width: 80%;
+  background-color: #2c3e50;
+  height: 3px;
+  position: relative;
+  top: -35px;
+  left: -35px;
+  border: none;
+  z-index: -1;
+}
+.badg {
+  background-color: #2c3e50;
+}
+h3 > span:first-child {
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+h1 {
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-shadow: 2px 3px 2px rgba(105, 121, 161, 0.4);
 }
 </style>
