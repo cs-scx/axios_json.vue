@@ -5,6 +5,10 @@
 npm install
 ```
 
+## 启动json-server加载db.json中的数据
+```
+json-server db.json
+```
 ### Compiles and hot-reloads for development
 ```
 npm run serve
